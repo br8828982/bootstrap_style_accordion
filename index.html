@@ -26,12 +26,12 @@
 <body>
   <div id="accordion">
     <div class="accordion-item">
-      <button class="accordion-header" data-target="accordion-body-1" >Toggle Content 1</button>
+      <button class="accordion-header" data-target="accordion-body-1" data-parent="accordion">Toggle Content 1</button>
       <div id="accordion-body-1" class="accordion-body">
         <p>This is a content.</p>
         <div id="sub-accordion"></div>
         <div class="accordion-item">
-          <button class="accordion-header" data-target="accordion-body-1-1" >Toggle Content 1.1</button>
+          <button class="accordion-header" data-target="accordion-body-1-1" data-parent="sub-accordion">Toggle Content 1.1</button>
           <div id="accordion-body-1-1" class="accordion-body">
             <p>This is a content.</p>
           </div>
@@ -39,7 +39,7 @@
       </div>
     </div>
     <div id="accordion-item">
-      <button class="accordion-header" data-target="accordion-body-2" >Toggle Content 2</button>
+      <button class="accordion-header" data-target="accordion-body-2" data-parent="accordion">Toggle Content 2</button>
       <div id="accordion-body-2" class="accordion-body">
         <p>This is a content.</p>
       </div>
