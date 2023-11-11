@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Toggle Menu</title>
   <style>
-    .content {
+    .accordion-body {
       display: none;
       height: 0;
       opacity: 0;
@@ -14,7 +13,7 @@
       transition: all .3s ease-out;
     }
 
-    .open {
+    .accordion-body.open {
       display: block;
       height: auto;
       opacity: 1;
@@ -26,69 +25,71 @@
 <body>
   <div id="accordion">
     <div class="accordion-item">
-      <button class="button" data-target="content1" data-parent="accordion">Toggle Content 1</button>
-      <div id="content1" class="content">
+      <button class="accordion-header" data-target="accordion-body-1" data-parent="accordion">Toggle Content 1</button>
+      <div id="accordion-body-1" class="accordion-body">
         <p>This is a content.</p>
         <div id="sub-accordion"></div>
-        <div class="sub-accordion-item">
-          <button class="button" data-target="content1-1" data-parent="sub-accordion">Toggle Content 1.1</button>
-          <div id="content1-1" class="content">
+        <div class="accordion-item">
+          <button class="accordion-header" data-target="accordion-body-1-1" data-parent="sub-accordion">Toggle Content 1.1</button>
+          <div id="accordion-body-1-1" class="accordion-body">
             <p>This is a content.</p>
           </div>
         </div>
       </div>
     </div>
     <div id="accordion-item">
-      <button class="button" data-target="content2" data-parent="accordion">Toggle Content 2</button>
-      <div id="content2" class="content">
+      <button class="accordion-header" data-target="accordion-body-2" data-parent="accordion">Toggle Content 2</button>
+      <div id="accordion-body-2" class="accordion-body">
         <p>This is a content.</p>
       </div>
     </div>
   </div>
 
   <script>
-    const collapse = (element, open) => {
-      const removeStyle = () => element.removeAttribute('style');
-
-      element.style.overflow = "hidden";
-      element.style.display = "block";
-      element.style.height = element.scrollHeight + 'px';
-
-      setTimeout(() => element.style.height = !open && 0);
-
-      element.addEventListener('transitionend', removeStyle);
-
-      element.classList.toggle('open', open);
-    };
-
-    const handleClick = (event) => {
-      const button = event.target.closest(".button");
-
-      if (!button) return;
-
-      const atr = button.getAttribute("data-target");
-      const element = document.getElementById(atr);
-
-      if (!element) return;
-
-      const isOpen = element.classList.contains("open");
-
-      const parentAtr = button.getAttribute("data-parent");
-      const parentElement = document.getElementById(parentAtr);
-
-      if (parentElement) {
-        const activeElements = parentElement.querySelectorAll('.content.open');
-
-        activeElements.forEach((el) => collapse(el, false));
+    class Accordion {
+      constructor() {
+        this.init = this.init.bind(this);
+        document.body.addEventListener("click", this.init);
       }
 
-      collapse(element, !isOpen);
-    };
+      collapse(element, isOpen) {
+        element.style.overflow = "hidden";
+        element.style.display = "block";
+        element.style.height = element.scrollHeight + 'px';
 
-    document.body.addEventListener("click", handleClick);
+        setTimeout(() => element.style.height = !isOpen && 0);
+
+        const removeStyle = () => element.removeAttribute('style');
+        
+        element.addEventListener('transitionend', removeStyle);
+
+        element.classList.toggle('open', isOpen);
+      }
+
+      init(event) {
+        const accordionHeader = event.target.closest(".accordion-header");
+
+        if (!accordionHeader) return;
+
+        const headerAttribute = accordionHeader.getAttribute("data-target");
+        const accordionBody = document.getElementById(headerAttribute);
+
+        if (!accordionBody) return;
+
+        const isOpen = accordionBody.classList.contains("open");
+
+        const parentAttribute = accordionHeader.getAttribute("data-parent");
+        const parentElement = document.getElementById(parentAttribute);
+
+        const activeElements = parentElement && parentElement.querySelectorAll('.accordion-body.open');
+
+        parentElement && activeElements.forEach((accordionBody) => this.collapse(accordionBody, false));
+        
+        this.collapse(accordionBody, !isOpen);
+      }
+    }
+
+    const myAccordion = new Accordion();
   </script>
-
-
 </body>
-
 </html>
