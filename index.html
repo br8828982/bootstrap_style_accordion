@@ -47,18 +47,18 @@
   </div>
 
   <script>
-    const collapse = (element, open) => {
+    const collapse = (element, isOpen) => {
       element.style.overflow = "hidden";
       element.style.display = "block";
       element.style.height = element.scrollHeight + 'px';
 
-      setTimeout(() => element.style.height = !open && 0);
+      setTimeout(() => element.style.height = !isOpen && 0);
 
       const removeStyle = () => element.removeAttribute('style');
       
       element.addEventListener('transitionend', removeStyle);
 
-      element.classList.toggle('open', open);
+      element.classList.toggle('open', isOpen);
     };
 
     const handleClick = (event) => {
