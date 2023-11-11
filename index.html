@@ -48,14 +48,14 @@
 
   <script>
     const collapse = (element, open) => {
-      const removeStyle = () => element.removeAttribute('style');
-
       element.style.overflow = "hidden";
       element.style.display = "block";
       element.style.height = element.scrollHeight + 'px';
 
       setTimeout(() => element.style.height = !open && 0);
 
+      const removeStyle = () => element.removeAttribute('style');
+      
       element.addEventListener('transitionend', removeStyle);
 
       element.classList.toggle('open', open);
