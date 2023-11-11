@@ -71,16 +71,16 @@
 
       if (!accordionBody) return;
 
-      const isOpen = accordionBody.classList.contains("open");
-
       const parentAttribute = accordionHeader.getAttribute("data-parent");
       const parentElement = document.getElementById(parentAttribute);
 
       const activeElements = parentElement && parentElement.querySelectorAll('.accordion-body.open');
 
-      parentElement && activeElements.forEach((el) => collapse(el, false));
+      parentElement && activeElements.forEach((element) => collapse(element, false));
 
-      collapse(element, !isOpen);
+      const isOpen = accordionBody.classList.contains("open");
+      
+      collapse(accordionBody, !isOpen);
     };
 
     document.body.addEventListener("click", handleClick);
