@@ -6,10 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Toggle Menu</title>
   <style>
-    .button {
-      display: block;
-    }
-
     .content {
       display: none;
       height: 0;
@@ -30,7 +26,7 @@
 <body>
   <div id="accordion">
     <div class="accordion-item">
-      <button class="button" data-target="content1">Toggle Content 1</button>
+      <button class="button" data-target="content1" data-parent="accordion">Toggle Content 1</button>
       <div id="content1" class="content">
         <p>This is a content.</p>
         <div id="sub-accordion"></div>
@@ -42,13 +38,12 @@
         </div>
       </div>
     </div>
-  </div>
-  <div id="accordion-item">
-    <button class="button" data-target="content2" data-parent="accordion">Toggle Content 2</button>
-    <div id="content2" class="content">
-      <p>This is a content.</p>
+    <div id="accordion-item">
+      <button class="button" data-target="content2" data-parent="accordion">Toggle Content 2</button>
+      <div id="content2" class="content">
+        <p>This is a content.</p>
+      </div>
     </div>
-  </div>
   </div>
 
   <script>
