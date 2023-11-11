@@ -71,6 +71,8 @@
 
       if (!accordionBody) return;
 
+      const isOpen = accordionBody.classList.contains("open");
+
       const parentAttribute = accordionHeader.getAttribute("data-parent");
       const parentElement = document.getElementById(parentAttribute);
 
@@ -78,8 +80,6 @@
 
       parentElement && activeElements.forEach((element) => collapse(element, false));
 
-      const isOpen = accordionBody.classList.contains("open");
-      
       collapse(accordionBody, !isOpen);
     };
 
