@@ -26,12 +26,12 @@
 <body>
   <div id="accordion">
     <div class="accordion-item">
-      <button class="button" data-target="content1" data-parent="accordion">Toggle Content 1</button>
+      <button class="button" data-target="content1" >Toggle Content 1</button>
       <div id="content1" class="content">
         <p>This is a content.</p>
         <div id="sub-accordion"></div>
         <div class="sub-accordion-item">
-          <button class="button" data-target="content1-1" data-parent="sub-accordion">Toggle Content 1.1</button>
+          <button class="button" data-target="content1-1" >Toggle Content 1.1</button>
           <div id="content1-1" class="content">
             <p>This is a content.</p>
           </div>
@@ -39,7 +39,7 @@
       </div>
     </div>
     <div id="accordion-item">
-      <button class="button" data-target="content2" data-parent="accordion">Toggle Content 2</button>
+      <button class="button" data-target="content2" >Toggle Content 2</button>
       <div id="content2" class="content">
         <p>This is a content.</p>
       </div>
@@ -76,11 +76,9 @@
       const parentAtr = button.getAttribute("data-parent");
       const parentElement = document.getElementById(parentAtr);
 
-      if (parentElement) {
-        const activeElements = parentElement.querySelectorAll('.content.open');
+      const activeElements = parentElement && parentElement.querySelectorAll('.content.open');
 
-        activeElements.forEach((el) => collapse(el, false));
-      }
+      parentElement && activeElements.forEach((el) => collapse(el, false));
 
       collapse(element, !isOpen);
     };
