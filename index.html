@@ -83,7 +83,7 @@
 
         const activeElements = parentElement && parentElement.querySelectorAll('.accordion-body.open');
 
-        parentElement && activeElements.forEach((accordionBody) => this.collapse(accordionBody, false));
+        parentElement && activeElements.forEach((element) => this.collapse(element, false));
         
         this.collapse(accordionBody, !isOpen);
       }
