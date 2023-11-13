@@ -48,14 +48,14 @@
 
   <script>
     const collapse = (element, open) => {
-      const removeStyle = () => element.removeAttribute('style');
-
       element.style.overflow = "hidden";
       element.style.display = "block";
       element.style.height = element.scrollHeight + 'px';
 
-      setTimeout(() => element.style.height = !open && 0);
+      if (!open) setTimeout(() => element.style.height = 0);
 
+      const removeStyle = () => element.removeAttribute('style');
+      
       element.addEventListener('transitionend', removeStyle);
 
       element.classList.toggle('open', open);
@@ -66,8 +66,8 @@
 
       if (!button) return;
 
-      const atr = button.getAttribute("data-target");
-      const element = document.getElementById(atr);
+      const buttonAtr = button.getAttribute("data-target");
+      const element = document.getElementById(buttonAtr);
 
       if (!element) return;
 
