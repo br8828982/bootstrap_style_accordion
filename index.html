@@ -76,7 +76,7 @@
       const parentAttribute = accordionHeader.getAttribute("data-parent");
       const parentElement = document.getElementById(parentAttribute);
 
-      const activeElements = parentElement && parentElement.querySelectorAll('.accordion-body.open');
+      const activeElements = parentElement?.querySelectorAll('.accordion-body.open');
 
       parentElement && activeElements.forEach((element) => collapse(element, false));
 
