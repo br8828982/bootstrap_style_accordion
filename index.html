@@ -71,11 +71,11 @@
 
       if (!accordionBody) return;
 
-      const isOpen = accordionBody.classList.contains("open");
-
       const parentAttribute = accordionHeader.getAttribute("data-parent");
       const parentElement = document.getElementById(parentAttribute);
 
+      const isOpen = accordionBody.classList.contains("open");
+  
       const activeElements = parentElement?.querySelectorAll('.accordion-body.open');
 
       activeElements?.forEach((element) => collapse(element, false));
