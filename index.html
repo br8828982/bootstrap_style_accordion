@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Toggle Menu</title>
   <style>
-    .content {
+    .accordion-body {
       display: none;
       height: 0;
       opacity: 0;
@@ -14,7 +14,7 @@
       transition: all .3s ease-out;
     }
 
-    .open {
+    .accordion-body.open {
       display: block;
       height: auto;
       opacity: 1;
@@ -26,68 +26,71 @@
 <body>
   <div id="accordion">
     <div class="accordion-item">
-      <button class="button" data-target="content1" data-parent="accordion">Toggle Content 1</button>
-      <div id="content1" class="content">
-        <p>This is a content.</p>
+      <button class="accordion-header" data-target="accordion-body-1" data-parent="accordion">Toggle Content 1</button>
+      <div id="accordion-body-1" class="accordion-body">
+        <p>This is content.</p>
         <div id="sub-accordion"></div>
-        <div class="sub-accordion-item">
-          <button class="button" data-target="content1-1" data-parent="sub-accordion">Toggle Content 1.1</button>
-          <div id="content1-1" class="content">
-            <p>This is a content.</p>
+        <div class="accordion-item">
+          <button class="accordion-header" data-target="accordion-body-1-1" data-parent="sub-accordion">Toggle Content 1.1</button>
+          <div id="accordion-body-1-1" class="accordion-body">
+            <p>This is content.</p>
           </div>
         </div>
       </div>
     </div>
-    <div id="accordion-item">
-      <button class="button" data-target="content2" data-parent="accordion">Toggle Content 2</button>
-      <div id="content2" class="content">
-        <p>This is a content.</p>
+    <div class="accordion-item">
+      <button class="accordion-header" data-target="accordion-body-2" data-parent="accordion">Toggle Content 2</button>
+      <div id="accordion-body-2" class="accordion-body">
+        <p>This is content.</p>
       </div>
     </div>
   </div>
 
   <script>
-    const collapse = (element, open) => {
+    // Function to collapse/expand accordion body
+    const collapse = (element, isOpen) => {
       element.style.overflow = "hidden";
       element.style.display = "block";
       element.style.height = element.scrollHeight + 'px';
 
-      if (!open) setTimeout(() => element.style.height = 0);
+      setTimeout(() => element.style.height = !isOpen && 0);
 
       const removeStyle = () => element.removeAttribute('style');
-      
+
       element.addEventListener('transitionend', removeStyle);
 
-      element.classList.toggle('open', open);
+      element.classList.toggle('open', isOpen);
     };
 
+    // Handle click event on accordion headers
     const handleClick = (event) => {
-      const button = event.target.closest(".button");
+      const accordionHeader = event.target.closest(".accordion-header");
 
-      if (!button) return;
+      if (!accordionHeader) return;
 
-      const buttonAtr = button.getAttribute("data-target");
-      const element = document.getElementById(buttonAtr);
+      const headerAttribute = accordionHeader.getAttribute("data-target");
+      const accordionBody = document.getElementById(headerAttribute);
 
-      if (!element) return;
+      if (!accordionBody) return;
 
-      const isOpen = element.classList.contains("open");
+      // Only close all active accordions if data-parent attribute is present.
+      const parentAttribute = accordionHeader.getAttribute("data-parent");
+      const parentElement = document.getElementById(parentAttribute);
 
-      const parentAtr = button.getAttribute("data-parent");
-      const parentElement = document.getElementById(parentAtr);
+      const isOpen = accordionBody.classList.contains("open");
 
-      if (parentElement) {
-        const activeElements = parentElement.querySelectorAll('.content.open');
+      const activeElements = parentElement?.querySelectorAll('.accordion-body.open');
 
-        activeElements.forEach((el) => collapse(el, false));
-      }
+      // Close all active accordions.
+      activeElements?.forEach((element) => collapse(element, false));
 
-      collapse(element, !isOpen);
+      // Toggle clicked accordion.
+      collapse(accordionBody, !isOpen);
     };
 
+    // Event delegation
     document.body.addEventListener("click", handleClick);
   </script>
-
 
 </body>
 
